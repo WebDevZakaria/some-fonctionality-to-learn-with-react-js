@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './App.css';
+import './InputField.css';
 import SignatureCanvas from 'react-signature-canvas'
 
 
@@ -7,6 +7,7 @@ function App() {
 
   const [sign,setSign] = useState()
   const [url,setUrl] = useState()
+  const [value,setValue] = useState('')
 
   const handleClear = () =>{
     sign.clear()
@@ -17,8 +18,6 @@ const handleGenerate = () =>{
   setUrl(sign.getTrimmedCanvas().toDataURL('image/png'))
     
   }
-
-
 
   return (
     <div className="App">
@@ -40,7 +39,19 @@ const handleGenerate = () =>{
        <img src={url} />
        </div>
 
+
+       <div>
+
+        <div className='main'>
+          <input onChange={(e) => {setValue(e.target.value)}} />
+          <span className={value.length == 0 ?"":'fill'} >Email</span>
+        </div>
+
+ 
+       </div>
+
     </div>
+
   );
 }
 
