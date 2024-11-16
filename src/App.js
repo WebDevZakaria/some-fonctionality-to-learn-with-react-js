@@ -9,6 +9,7 @@ function App() {
   const [url,setUrl] = useState()
   const [value,setValue] = useState('')
   const [isOnline,setIsOnline] = useState(navigator.onLine)
+  const [progress,setProgress] = useState(0)
 
   const handleCheck = () =>{
 
@@ -20,6 +21,14 @@ function App() {
   useEffect(() =>{
     window.addEventListener('online',handleCheck)
     window.addEventListener('offline',handleCheck)
+    const clear =setInterval (()=>{
+      setProgress(val =>{
+        const newVal = val + 10
+        return newVal > 100 ?100 :newVal
+      })
+
+    },1000)
+    return () => clearInterval(clear)
 
 
   })
@@ -69,7 +78,18 @@ const handleGenerate = () =>{
         <h1>{isOnline?'Online' :'Offline'}</h1>
        </div>
 
+       <div style={{display:'flex',justifyContent:'center'}}>
+        <div style={{textAlign:'center'}}>
+       <div style = {{width:'200px',border:'2px solid'}}>
+        <div style={{height:'20px',background:'red',width: `${progress}%` ,transition:'width,0.3s ease-in-out'}}>
+
+        </div>
+       </div>
+       <p>{progress} %</p>
+       </div>
+       </div>
     </div>
+    
 
   );
 }
