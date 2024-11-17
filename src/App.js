@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import './InputField.css';
 import SignatureCanvas from 'react-signature-canvas'
 import  Webcam from 'react-webcam'
+import { Bar, Line, Pie } from 'react-chartjs-2';
+import {chart as chartjs} from 'chart.js/auto'
+
 
 const videoConstraints = {
   width: 1280,
@@ -11,7 +14,8 @@ const videoConstraints = {
 
 function App() {
 
-
+  
+  {/* how to access webcam in react fonctionality */}
   const [cap,setCap] = useState('')
   const webcamRef = React.useRef(null);
   const capture = React.useCallback(
@@ -31,6 +35,20 @@ function App() {
   const [value,setValue] = useState('')
   const [isOnline,setIsOnline] = useState(navigator.onLine)
   const [progress,setProgress] = useState(0)
+  
+
+  const ChartData = {
+    labels:["A","B"],
+    datasets:[{
+      lables:"Demo",
+      data:[3000,2000],
+      backgroundColor: ["grey","purple"],
+      borderColor:['red'],
+      borderWidth:10
+
+    }]
+  }
+
 
   const handleCheck = () =>{
 
@@ -40,6 +58,7 @@ function App() {
 
 
   useEffect(() =>{
+
     window.addEventListener('online',handleCheck)
     window.addEventListener('offline',handleCheck)
     const clear =setInterval (()=>{
@@ -130,6 +149,20 @@ const handleGenerate = () =>{
 
        </div>
 
+
+      {/* Charts in react js */}
+
+        <div>
+       <div style={{width:400}}>
+        <Bar data={ChartData} />
+       </div>
+       <div style={{width:400}}>
+        <Line data={ChartData} />
+       </div>
+       <div style={{width:400}}>
+        <Pie data={ChartData} />
+       </div>
+       </div>
 
     </div>
     
