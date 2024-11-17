@@ -1,9 +1,30 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './InputField.css';
 import SignatureCanvas from 'react-signature-canvas'
+import  Webcam from 'react-webcam'
 
+const videoConstraints = {
+  width: 1280,
+  height: 720,
+  facingMode: "user"
+};
 
 function App() {
+
+
+  const [cap,setCap] = useState('')
+  const webcamRef = React.useRef(null);
+  const capture = React.useCallback(
+    () => {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setCap(imageSrc)
+    },
+    [webcamRef]
+  );
+
+
+
+
 
   const [sign,setSign] = useState()
   const [url,setUrl] = useState()
@@ -74,6 +95,9 @@ const handleGenerate = () =>{
  
        </div>
 
+
+       {/* how to check internet connection in react js */}
+
        <div>
         <h1>{isOnline?'Online' :'Offline'}</h1>
        </div>
@@ -88,6 +112,25 @@ const handleGenerate = () =>{
        <p>{progress} %</p>
        </div>
        </div>
+
+       {/* how to access webcam in react fonctionality */}
+       <div>
+
+       <Webcam
+        audio={false}
+        height={600}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        width={600}
+        videoConstraints={videoConstraints}
+      />
+      <button onClick={capture}>Capture photo</button>
+
+      <img src={cap} />
+
+       </div>
+
+
     </div>
     
 
